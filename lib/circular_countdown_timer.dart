@@ -211,10 +211,11 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     if (widget.onComplete != null) widget.onComplete!();
   }
 
-  void incTimeInMinutes() {
+  void incTimeAndRestartInMinutes() {
     setState(() {
       widget.timeInMinutes++;
     });
+    widget.controller!.restart();
   }
 
   @override
