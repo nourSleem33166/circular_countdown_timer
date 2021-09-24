@@ -156,6 +156,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 
   void _setController() {
     widget.controller?._state = this;
+    widget.controller?.timeInMinutes = widget.timeInMinutes;
     widget.controller?._isReverse = widget.isReverse;
     widget.controller?._initialDuration = widget.initialDuration;
     widget.controller?._duration = widget.duration;
@@ -316,10 +317,10 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 class CountDownController {
   late CircularCountDownTimerState _state;
   late bool _isReverse;
-  int? _initialDuration, _duration;
-  int timeInMinutes;
+  late int timeInMinutes;
 
-  CountDownController({required this.timeInMinutes});
+  int? _initialDuration, _duration;
+
 
   /// This Method Starts the Countdown Timer
   void start() {
