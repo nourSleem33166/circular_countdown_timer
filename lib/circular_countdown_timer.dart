@@ -71,7 +71,7 @@ class CircularCountDownTimer extends StatefulWidget {
   final bool isTimerTextShown;
 
   /// Controls (i.e Start, Pause, Resume, Restart) the Countdown Timer.
-   CountDownController? controller;
+  final CountDownController? controller;
 
   /// Handles the timer start.
   final bool autoStart;
@@ -159,6 +159,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     widget.controller?._isReverse = widget.isReverse;
     widget.controller?._initialDuration = widget.initialDuration;
     widget.controller?._duration = widget.duration;
+
     if (widget.initialDuration > 0 && widget.autoStart) {
       if (widget.isReverse) {
         _controller?.value = 1 - (widget.initialDuration / widget.duration);
@@ -244,7 +245,6 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 
     _setAnimation();
     _setAnimationDirection();
-    widget.controller=CountDownController(timeInMinutes: widget.timeInMinutes);
     _setController();
   }
 
@@ -316,11 +316,10 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 class CountDownController {
   late CircularCountDownTimerState _state;
   late bool _isReverse;
-   int timeInMinutes;
 
   int? _initialDuration, _duration;
 
-  CountDownController({required this.timeInMinutes});
+
   /// This Method Starts the Countdown Timer
   void start() {
     if (_isReverse) {
@@ -350,7 +349,7 @@ class CountDownController {
   /// This Method Restarts the Countdown Timer,
   /// Here optional int parameter **duration** is the updated duration for countdown timer
 
-  void restart({int? duration, bool? incTimeInMinutes}) {
+  Future<void> restart({int? duration, bool? incTimeInMinutes}) async {
 
     _state._controller!.duration =
         Duration(seconds: duration ?? _state._controller!.duration!.inSeconds);
@@ -359,9 +358,7 @@ class CountDownController {
     } else {
       _state._controller?.forward(from: 0);
     }
-    if (incTimeInMinutes!) _state.setState(() {
-      timeInMinutes++;
-    });
+
   }
 
   /// This Method returns the **Current Time** of Countdown Timer i.e
