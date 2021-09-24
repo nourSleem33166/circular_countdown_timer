@@ -352,7 +352,7 @@ class CountDownController {
   /// Here optional int parameter **duration** is the updated duration for countdown timer
 
   void restart({int? duration, bool? incTimeInMinutes}) {
-    if (incTimeInMinutes!) timeInMinutes++;
+
     _state._controller!.duration =
         Duration(seconds: duration ?? _state._controller!.duration!.inSeconds);
     if (_isReverse) {
@@ -360,6 +360,9 @@ class CountDownController {
     } else {
       _state._controller?.forward(from: 0);
     }
+    if (incTimeInMinutes!) _state.setState(() {
+      timeInMinutes++;
+    });
   }
 
   /// This Method returns the **Current Time** of Countdown Timer i.e
