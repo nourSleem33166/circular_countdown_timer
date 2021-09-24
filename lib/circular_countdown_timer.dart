@@ -53,8 +53,7 @@ class CircularCountDownTimer extends StatefulWidget {
   /// Begin and end contours with a flat edge and no extension.
   final StrokeCap strokeCap;
 
-  int timeInMinutes = 0;
-
+  final int timeInMinutes;
   /// Text Style for Countdown Text.
   final TextStyle? textStyle;
 
@@ -211,12 +210,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     if (widget.onComplete != null) widget.onComplete!();
   }
 
-  void incTimeAndRestartInMinutes() {
-    setState(() {
-      widget.timeInMinutes++;
-    });
-    widget.controller!.restart();
-  }
+
 
   @override
   void initState() {
