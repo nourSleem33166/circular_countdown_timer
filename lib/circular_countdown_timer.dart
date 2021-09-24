@@ -54,6 +54,7 @@ class CircularCountDownTimer extends StatefulWidget {
   final StrokeCap strokeCap;
 
   final int timeInMinutes;
+
   /// Text Style for Countdown Text.
   final TextStyle? textStyle;
 
@@ -210,8 +211,6 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     if (widget.onComplete != null) widget.onComplete!();
   }
 
-
-
   @override
   void initState() {
     super.initState();
@@ -318,6 +317,9 @@ class CountDownController {
   late CircularCountDownTimerState _state;
   late bool _isReverse;
   int? _initialDuration, _duration;
+  int timeInMinutes;
+
+  CountDownController({required this.timeInMinutes});
 
   /// This Method Starts the Countdown Timer
   void start() {
@@ -348,7 +350,8 @@ class CountDownController {
   /// This Method Restarts the Countdown Timer,
   /// Here optional int parameter **duration** is the updated duration for countdown timer
 
-  void restart({int? duration}) {
+  void restart({int? duration, bool? incTimeInMinutes}) {
+    if (incTimeInMinutes!) timeInMinutes++;
     _state._controller!.duration =
         Duration(seconds: duration ?? _state._controller!.duration!.inSeconds);
     if (_isReverse) {
