@@ -47,6 +47,9 @@ class CircularCountDownTimer extends StatefulWidget {
   /// Border Thickness of the Countdown Ring.
   final double strokeWidth;
 
+  final Widget upperWidget;
+  final Widget bottomWidget;
+
   /// Begin and end contours with a flat edge and no extension.
   final StrokeCap strokeCap;
 
@@ -77,6 +80,8 @@ class CircularCountDownTimer extends StatefulWidget {
       required this.duration,
       required this.fillColor,
       required this.ringColor,
+      required this.upperWidget,
+      required this.bottomWidget,
       this.backgroundColor,
       this.fillGradient,
       this.ringGradient,
@@ -120,7 +125,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
       } else if (widget.textFormat == CountdownTextFormat.S) {
         return "0";
       } else {
-        return "00:00:00 ";
+        return "00:00:00";
       }
     } else {
       Duration duration = _controller!.duration! * _controller!.value;
@@ -270,13 +275,21 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
                     widget.isTimerTextShown
                         ? Align(
                             alignment: FractionalOffset.center,
-                            child: Text(
-                              time,
-                              style: widget.textStyle ??
-                                  TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                  ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                widget.upperWidget,
+                                Text(
+                                  time,
+                                  style: widget.textStyle ??
+                                      TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                      ),
+                                ),
+                                widget.bottomWidget
+                              ],
                             ),
                           )
                         : Container(),
